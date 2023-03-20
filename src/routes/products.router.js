@@ -5,9 +5,9 @@ const productsRouter = Router();
 
 const services = new ProductsService();
 
-productsRouter.get('/', (req, res) => {
+productsRouter.get('/', async (req, res) => {
   try {
-    const products = services.find();
+    const products = await services.find();
     res.status(200).json({
       length: products.length,
       products
@@ -20,27 +20,26 @@ productsRouter.get('/', (req, res) => {
   }
 });
 
-productsRouter.get('/filter', (req, res) => {
+productsRouter.get('/filter', async (req, res) => {
   res.send('this is a filter');
 });
 
-productsRouter.get('/:id', (req, res) => {
+productsRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const product = services.findOne(id);
+    const product = await services.findOne(id);
     if (product) return res.status(200).json(product);
-    res.status(404).json({ message: 'Not found' });
   } catch (error) {
-    res.status(400).send({error});
+    res.status(404).send({error: error.message});
   }
 });
 
-productsRouter.post('/', (req, res) => {
+productsRouter.post('/', async (req, res) => {
   const { body } = req;
 
   try {
-    const newProduct = services.create(body);
+    const newProduct = await services.create(body);
     res.status(201).json(newProduct);
   } catch (error) {
     res.status(400).send({
@@ -50,11 +49,11 @@ productsRouter.post('/', (req, res) => {
   }
 });
 
-productsRouter.patch('/:id', (req, res) => {
+productsRouter.patch('/:id', async (req, res) => {
   const { id } = req.params;
   const { body } = req;
   try {
-    const updated = services.update(id, body);
+    const updated = await services.update(id, body);
     res.status(201).json({
       message: 'Updated',
       data: updated
@@ -71,13 +70,16 @@ productsRouter.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deleted = services.delete(id);
-    res.status(204).json({
-      message: 'deleted',
-      deleted
-    });
+    const deleted = await services.delete(id);
+    if (deleted) {
+      return res.status(200).json({
+        message: 'deleted',
+        data: deleted
+      });
+    }
   } catch (error) {
-    res.status(404).json(error);
+    res.status(404).json({error: error.message});
   }
 });
+
 module.exports = productsRouter;

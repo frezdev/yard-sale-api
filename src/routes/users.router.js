@@ -5,9 +5,9 @@ const usersRouter = Router();
 
 const services = new UsersService();
 
-usersRouter.get('/', (req, res) => {
+usersRouter.get('/', async (req, res) => {
   // const { limit, offset } = req.query;
-  const users = services.find();
+  const users = await services.find();
   res.status(200).json({length: users.length, users});
 });
 
@@ -15,7 +15,7 @@ usersRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const user = services.findOne(id);
+    const user = await services.findOne(id);
     if (user) return res.status(200).json(user);
     res.status(404).send({ message: 'Not foud' });
   } catch (error) {
@@ -27,7 +27,7 @@ usersRouter.post('/', async (req, res) => {
   const { body } = req;
 
   try {
-    const newUser = services.create(body);
+    const newUser = await services.create(body);
     res.status(201).json(newUser);
   } catch (error) {
     res.status(400).send({
@@ -42,7 +42,7 @@ usersRouter.patch('/:id', async (req, res) => {
   const { body } = req;
 
   try {
-    const updated = services.update(id, body);
+    const updated = await services.update(id, body);
     res.status(201).json({
       message: 'Updated',
       data: updated
@@ -55,11 +55,11 @@ usersRouter.patch('/:id', async (req, res) => {
   }
 });
 
-usersRouter.delete('/:id', (req, res) => {
+usersRouter.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deleted = services.delete(id);
+    const deleted = await services.delete(id);
     res.status(204).json({
       message: 'deleted',
       deleted
