@@ -12,9 +12,10 @@ class UsersService {
     for (let index = 0; index < limit; index++) {
       this.users.push({
         id: faker.datatype.uuid(),
-        name: faker.name.fullName(),
         avatar: faker.image.avatar(),
         email: faker.internet.email(),
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
       });
     }
   }
@@ -68,10 +69,10 @@ class UsersService {
       throw new Error('Not found');
     }
 
-    // const deleted = { ...this.users[index]};
+    const deleted = { ...this.users[index]};
     this.users.splice(index, 1);
 
-    return { id };
+    return { deleted };
   }
 }
 
