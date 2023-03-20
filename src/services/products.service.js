@@ -20,7 +20,7 @@ class ProductsService {
   }
 
   // crear un nuevo producto
-  create(data) {
+  async create(data) {
     const newProduct = {
       id: faker.datatype.uuid(),
       ...data
@@ -31,19 +31,31 @@ class ProductsService {
   }
 
   // obtener todos los productos
-  find() {
-    return this.products;
+  async find() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          resolve(this.products);
+        } catch (error) {
+          reject(error);
+        }
+      }, 5000);
+    });
   }
 
   // obtener un producto por su id
-  findOne(id) {
-    return this.products.find(
+  async findOne(id) {
+    const product = this.products.find(
       product => product.id === id
     );
+
+    if (!product) throw new Error('Not Found');
+
+    return product;
   }
 
   // actualizar la información de un producto
-  update(id, data) {
+  async update(id, data) {
     const index = this.products.findIndex(
       product => product.id === id
     );
@@ -60,7 +72,7 @@ class ProductsService {
   }
 
   // eliminar un producto
-  delete(id) {
+  async delete(id) {
     const index = this.products.findIndex(
       product => product.id === id
     );
@@ -68,10 +80,10 @@ class ProductsService {
       throw new Error('Not found');
     }
 
-    // const deleted = { ...this.products[index]};
+    const deleted = { ...this.products[index]};
     this.products.splice(index, 1);
 
-    return { id };
+    return { deleted };
   }
 }
 

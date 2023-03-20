@@ -21,7 +21,7 @@ class UsersService {
   }
 
   // crear un nuevo usuario
-  create(data) {
+  async create(data) {
     const newUser = {
       id: faker.datatype.uuid(),
       ...data
@@ -32,19 +32,19 @@ class UsersService {
   }
 
   // obtener todos los usuarios
-  find() {
+  async find() {
     return this.users;
   }
 
   // obtener un usuario por su id
-  findOne(id) {
+  async findOne(id) {
     return this.users.find(
       user => user.id === id
     );
   }
 
   // actualizar la información de un usuario
-  update(id, data) {
+  async update(id, data) {
     const index = this.users.findIndex(
       user => user.id === id
     );
@@ -61,7 +61,7 @@ class UsersService {
   }
 
   // eliminar un usuario
-  delete(id) {
+  async delete(id) {
     const index = this.users.findIndex(
       user => user.id === id
     );
