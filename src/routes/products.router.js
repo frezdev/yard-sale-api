@@ -24,21 +24,20 @@ productsRouter.get('/filter', async (req, res) => {
   res.send('this is a filter');
 });
 
-productsRouter.get('/:id', async (req, res) => {
-  const { id } = req.params;
-
+productsRouter.get('/:id', async (req, res, next) => {
   try {
+    const { id } = req.params;
     const product = await services.findOne(id);
     if (product) return res.status(200).json(product);
   } catch (error) {
-    res.status(404).send({error: error.message});
+    next(error);
+    //res.status(404).send({error: error.message});
   }
 });
 
 productsRouter.post('/', async (req, res) => {
-  const { body } = req;
-
   try {
+    const { body } = req;
     const newProduct = await services.create(body);
     res.status(201).json(newProduct);
   } catch (error) {
@@ -50,9 +49,9 @@ productsRouter.post('/', async (req, res) => {
 });
 
 productsRouter.patch('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { body } = req;
   try {
+    const { id } = req.params;
+    const { body } = req;
     const updated = await services.update(id, body);
     res.status(201).json({
       message: 'Updated',
@@ -67,9 +66,8 @@ productsRouter.patch('/:id', async (req, res) => {
 });
 
 productsRouter.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-
   try {
+    const { id } = req.params;
     const deleted = await services.delete(id);
     if (deleted) {
       return res.status(200).json({
