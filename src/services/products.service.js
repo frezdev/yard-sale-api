@@ -1,4 +1,5 @@
 const faker = require('faker');
+const boom = require('@hapi/boom');
 
 class ProductsService {
 
@@ -14,7 +15,8 @@ class ProductsService {
         id: faker.datatype.uuid(),
         name: faker.commerce.productName(),
         price: Number(faker.commerce.price()),
-        image: faker.image.imageUrl()
+        image: faker.image.imageUrl(),
+        isBlock: faker.datatype.boolean()
       });
     }
   }
@@ -39,17 +41,18 @@ class ProductsService {
         } catch (error) {
           reject(error);
         }
-      }, 5000);
+      }, 2000);
     });
   }
 
   // obtener un producto por su id
   async findOne(id) {
-    const product = this.products.find(
-      product => product.id === id
-    );
+    const product = this.products.find(product => (
+      product.id === id
+    ));
 
-    if (!product) throw new Error('Not Found');
+    if (!product) throw boom.notFound('Product not found');
+    if (product.isBlock) throw boom.conflict('Product is block');
 
     return product;
   }
@@ -60,7 +63,7 @@ class ProductsService {
       product => product.id === id
     );
     if (index === -1) {
-      throw new Error('Product not found');
+      throw boom.notFound('Product not found');
     }
 
     this.products[index] = {
@@ -77,7 +80,7 @@ class ProductsService {
       product => product.id === id
     );
     if (index == -1) {
-      throw new Error('Not found');
+      throw boom.notFound('Product not found');
     }
 
     const deleted = { ...this.products[index]};
