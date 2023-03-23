@@ -31,24 +31,20 @@ productsRouter.get('/:id', async (req, res, next) => {
     if (product) return res.status(200).json(product);
   } catch (error) {
     next(error);
-    //res.status(404).send({error: error.message});
   }
 });
 
-productsRouter.post('/', async (req, res) => {
+productsRouter.post('/', async (req, res, next) => {
   try {
     const { body } = req;
     const newProduct = await services.create(body);
     res.status(201).json(newProduct);
   } catch (error) {
-    res.status(400).send({
-      message: 'ocurrió un error en el registro',
-      error
-    });
+    next(error);
   }
 });
 
-productsRouter.patch('/:id', async (req, res) => {
+productsRouter.patch('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const { body } = req;
@@ -58,14 +54,11 @@ productsRouter.patch('/:id', async (req, res) => {
       data: updated
     });
   } catch (error) {
-    res.status(400).send({
-      message: 'ocurrió un error en el registro',
-      error
-    });
+    next(error);
   }
 });
 
-productsRouter.delete('/:id', async (req, res) => {
+productsRouter.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const deleted = await services.delete(id);
@@ -76,7 +69,7 @@ productsRouter.delete('/:id', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(404).json({error: error.message});
+    next(error);
   }
 });
 
