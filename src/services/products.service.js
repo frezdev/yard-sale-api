@@ -37,7 +37,8 @@ class ProductsService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         try {
-          resolve(this.products);
+          const availableProducts = this.products.filter(item => !item.isBlock);
+          resolve(availableProducts);
         } catch (error) {
           reject(error);
         }
