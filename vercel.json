@@ -14,13 +14,10 @@
     {
       "src": "/api/index.js",
       "use": "@now/node"
-    }
-  ],
-
-  "files": [
+    },
     {
-      "source": "/public/**",
-      "destination": "/public/$1"
+      "src": "/api/public",
+      "use": "@vercel/static"
     }
   ]
 }
