@@ -19,7 +19,7 @@ const options = {
   }
 };
 app.use(cors(options));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public/')));
 
 routerApi(app);
 
