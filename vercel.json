@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/api/public/"
+      "destination": "/public/"
     },
     {
       "source": "/api/(.*)",
@@ -14,6 +14,9 @@
     {
       "src": "/api/index.js",
       "use": "@now/node"
+    },
+    {
+      "src": "/public/"
     }
   ]
 }
