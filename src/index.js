@@ -12,7 +12,7 @@ app.use(express.json());
 const whiteList = ['http://localhost:3000/', 'https://www.google.com/'];
 const options = {
   origin: (origin, callback) => {
-    whiteList.includes(origin)
+    (whiteList.includes(origin) || !origin)
       ? callback(null, true)
       : callback(new Error('Acceso no permitido'));
   }
