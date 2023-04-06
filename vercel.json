@@ -1,5 +1,4 @@
 {
-  "public": true,
   "rewrites": [
     {
       "source": "/",
@@ -15,6 +14,13 @@
     {
       "src": "/api/index.js",
       "use": "@now/node"
+    }
+  ],
+
+  "files": [
+    {
+      "source": "/public/**",
+      "destination": "/public/$1"
     }
   ]
 }
