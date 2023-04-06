@@ -10,7 +10,6 @@ function errorHandler (error, req, res, next) {
   console.log('error handler');
   res.status(500).json({
     message: error.message,
-    stack: error.stack
   });
 }
 
