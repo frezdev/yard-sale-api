@@ -8,8 +8,8 @@
       "source": "/api/(.*)",
       "destination": "/api"
     },
-    { "source": "/(.*)", "destination": "/index.html" },
-    { "source": "/(.*)", "destination": "/public/**" }
+    { "source": "/(.*)", "destination": "/public/" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
 
   "builds": [
