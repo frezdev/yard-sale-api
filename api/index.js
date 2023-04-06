@@ -19,11 +19,11 @@ const options = {
 };
 app.use(cors(options));
 
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
   res.send('Hola Mundo desde Express');
 });
 
-app.get('/nueva-ruta', (req, res) => {
+app.get('/api/nueva-ruta', (req, res) => {
   res.send('Hola Soy una nueva ruta');
 });
 
