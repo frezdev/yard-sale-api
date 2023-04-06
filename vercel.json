@@ -9,7 +9,7 @@
       "destination": "/api"
     },
     { "source": "/(.*)", "destination": "/index.html" },
-    { "source": "/(.*)", "destination": "/*.css" }
+    { "source": "/(.*)", "destination": "/public/**" }
   ],
 
   "builds": [
