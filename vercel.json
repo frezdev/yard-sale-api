@@ -16,7 +16,15 @@
       "use": "@now/node"
     },
     {
-      "src": "/api/public",
+      "src": "*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.svg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.html",
       "use": "@vercel/static"
     }
   ]
