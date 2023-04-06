@@ -18,14 +18,7 @@ const options = {
   }
 };
 app.use(cors(options));
-
-app.get('/api', async (req, res) => {
-  res.send('Hola Mundo desde Express');
-});
-
-app.get('/api/nueva-ruta', (req, res) => {
-  res.send('Hola Soy una nueva ruta');
-});
+app.use(express.static('public'));
 
 routerApi(app);
 
