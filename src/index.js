@@ -9,7 +9,7 @@ const port = 3000;
 
 app.use(express.json());
 
-const whiteList = ['http://localhost:3000/', 'https://www.google.com/'];
+const whiteList = ['http://localhost:3000/', 'http://localhost:5173'];
 const options = {
   origin: (origin, callback) => {
     (whiteList.includes(origin) || !origin)
