@@ -8,7 +8,16 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(cors());
+
+const whiteList = ['http://localhost:3000/', 'https://www.google.com/'];
+const options = {
+  origin: (origin, callback) => {
+    whiteList.includes(origin)
+      ? callback(null, true)
+      : callback(new Error('Acceso no permitido'));
+  }
+};
+app.use(cors(options));
 
 app.get('/', async (req, res) => {
   res.send('Hola Mundo desde Express');
