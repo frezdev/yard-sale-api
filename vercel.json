@@ -20,7 +20,7 @@
       "use": "@vercel/static"
     },
     {
-      "src": "/public/(.*)",
+      "src": "/public/*.css",
       "use": "@vercel/static"
     }
   ]
