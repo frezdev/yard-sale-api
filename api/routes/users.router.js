@@ -81,4 +81,4 @@ usersRouter.delete('/:id', async (req, res) => {
   }
 });
 
-module.exports = usersRouter;
+module.exports = { usersRouter };
