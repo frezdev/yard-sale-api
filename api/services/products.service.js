@@ -8,7 +8,7 @@ class ProductsService {
     this.generate();
   }
 
-  generate() {
+  async generate() {
     const limit = 100;
     for (let index = 0; index < limit; index++) {
       this.products.push({
@@ -16,7 +16,9 @@ class ProductsService {
         name: faker.commerce.productName(),
         price: Number(faker.commerce.price()),
         image: faker.image.imageUrl(),
-        isBlock: faker.datatype.boolean()
+        isBlock: faker.datatype.boolean(),
+        description: faker.commerce.productDescription(),
+        category: faker.commerce.department()
       });
     }
   }
